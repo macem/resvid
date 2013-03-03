@@ -1,69 +1,47 @@
-/* @ name        : lazy
-   @ description : replace links to images and show it when is in view 
+/* @ name        : resvid
+   @ description : adjust iframe, object video for responsive design 
    @ author      : marcin.soltysiuk@gmail.com 
-   @ version     : 0.8
-   @ date        : 15.11.2012 */
+   @ version     : 0.9
+   @ date        : 02.03.2013 */
 
 (function($) {
     
-    var name = 'resvid';
+    var name = 'resvid', 
+        def = {
+          class : 'flex-video',
+          style : '.flex-video iframe, .flex-video object { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; min-height: 480px; min-width: 640px; }'
+                + '.flex-video { height: 0; margin-bottom: 1em; overflow: hidden; padding-bottom: 67.5%; padding-top: 1.5625em; position: relative; }'  
+    };
 
-    $.fn[name] = function () {
-        var $all = this, $replaced;
+    // inject css
 
-        // event
+    $('<style type="text/css">' + def.style + '</style>').appendTo ('head');
 
-        $all.one ('load', function() {
-            
-            $replaced = $('<div />').attr ({
-                'class' : 'video-container'
-            });
+    $.fn[name] = function (options) {
+        var $all = this, _options = {};
 
-            $(this).wrap ($replaced);
+        // inherit options
+
+        $.extend (_options, def, options);
+
+        $all.each (function () {
+            this.options = _options;
         });
 
-        function initialize () { 
-            
-            $all.trigger ('load');
-        }
+        // replace tag
 
-        // run
+        $all.one ('load', function() {
+            var options = this.options, $new;
 
-        initialize();
+            $new = $('<div />').attr ({'class' : options.class});
+
+            $(this).wrap ($new);
+        });
+
+        // init
+
+        $all.trigger ('load');
        
         return this;
     };
 })($);
-
-/*(function($, w, d) {
-  // The code here
-
-  var methods = {
-    init : function( options ) { 
-      // THIS 
-    },
-    show : function( ) {
-      // IS
-    },
-    hide : function( ) { 
-      // GOOD
-    },
-    update : function( content ) { 
-      // !!! 
-    }
-  };
-
-  $.fn.tooltip = function( method ) {
-    
-    // Method calling logic
-    if ( methods[method] ) {
-      return methods[ method ].apply( this, Array.prototype.slice.call( arguments, 1 ));
-    } else if ( typeof method === 'object' || ! method ) {
-      return methods.init.apply( this, arguments );
-    } else {
-      $.error( 'Method ' +  method + ' does not exist on jQuery.tooltip' );
-    }    
-  
-  };
-
-})($, window, document);*/
