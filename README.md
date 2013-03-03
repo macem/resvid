@@ -1,5 +1,6 @@
-resvid jQuery and Zepto plugin
+resvid
 ======
+jQuery and Zepto plugin
 
 Easy way to make YouTube, Vimeo video responsive.
 
