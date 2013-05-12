@@ -8,7 +8,7 @@
     
     var name = 'resvid', 
         def = {
-          class : 'flex-video',
+          classes : 'flex-video',
           style : '.flex-video iframe, .flex-video object { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }'
                 + '.flex-video { height: 0; margin-bottom: 1em; overflow: hidden; padding-bottom: 67.5%; padding-top: 1.5625em; position: relative; }'  
         };
@@ -33,7 +33,7 @@
         $all.one ('load', function() {
             var options = this.options, $new;
 
-            $new = $('<div />').attr ({'class' : options.class});
+            $new = $('<div />').attr ({'class' : options.classes});
 
             $(this).wrap ($new);
         });
